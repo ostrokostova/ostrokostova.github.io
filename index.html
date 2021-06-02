@@ -1,0 +1,90 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Острокостова Н.Н. Лабораторное задание 4</title>
+    <style>
+        .editor { 
+            width: 80vw; 
+            min-height: 100vw; 
+            margin-left: 10vw; 
+            border: 1px solid rgb(76, 164, 236); 
+            text-align: left; 
+            background-color: white; 
+            -webkit-box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.75); 
+            -moz-box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.75); 
+            box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.75); 
+            padding: 15px; 
+            }
+        .editor::after{
+            content: "|";
+            animation: editorAnimation .8s infinite ease-in-out;
+        }
+        @keyframes editorAnimation {
+            0%{
+                color: black;
+            }
+            100%{
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <h3>Острокостова Н.Н. - 1307М</h3>
+        <div id="pageEditor" class="editor" v-html="colorEmailText">
+        </div>
+    </div>
+    <!-- версия для разработки, отображает полезные предупреждения в консоли -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    title: 'Лабораторная работа 4 - Разработка текстового редактора для выделения Email адресов',
+                    text: '',
+                }
+            },
+            methods:{
+                onKeyDown(e) {
+                    switch (e.keyCode) {
+                        case 16:
+                            return
+                            break;
+                        case 18:
+                            return
+                            break;
+                        case 13: 
+                            this.text += '<br>'
+                            return
+                            break;
+                        case 8:
+                            this.text = this.text.slice(0, -1)
+                            return
+                            break;
+                        default:
+                            break;
+                    }
+                   this.text +=e.key
+                }
+            },
+            computed:{ 
+                colorEmailText(){ 
+                    return this.text.replace(/(\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)/gmu, email=> `<span style='color: blue;'> ${email} </span>`) 
+                } 
+            },
+            created(){
+                document.addEventListener('keydown', this.onKeyDown)
+            },
+            beforeDestroy() {
+                document.removeEventListener('keydown', this.onKeyDown)
+            },
+
+        })
+    </script>
+</body>
+</html>
