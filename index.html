@@ -66,10 +66,14 @@
                             this.text = this.text.slice(0, -1)
                             return
                             break;
+                        case 32: 
+                            this.text += e.key
+                            return
+                            break;
                         default:
+                            this.text +=e.key
                             break;
                     }
-                   this.text +=e.key
                 }
             },
             computed:{ 
